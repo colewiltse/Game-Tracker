@@ -1,4 +1,5 @@
 from django.db import models
+from accounts.models import GameTrackerUser
 
 
 CONSOLES = (
@@ -30,6 +31,7 @@ class Game(models.Model):
     title = models.CharField(max_length=50)
     console = models.CharField(max_length=30, choices=CONSOLES)
     description = models.CharField(max_length=200)
+    owner = models.ForeignKey('accounts.GameTrackerUser', on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return self.title + " - " + self.console

@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'games',
+    'accounts',
 ]
+
+AUTH_USER_MODEL = 'accounts.GameTrackerUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
