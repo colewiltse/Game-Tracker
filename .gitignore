@@ -1,5 +1,6 @@
 __pycache__
 db.sqlite3
-*/migrations/0*.py
+Backend/gametracker/*/migrations/0*.py
+profile_pics
 *.pyc
 .venv
