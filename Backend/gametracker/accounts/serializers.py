@@ -1,8 +1,12 @@
 from rest_framework import serializers
-from accounts.models import GameTrackerUser
+from accounts.models import GameTrackerUser, GameTrackerUserManager
+from django.contrib.auth.hashers import make_password
 
 class GameTrackerUserSerializer(serializers.ModelSerializer):
-    id = serializers.PrimaryKeyRelatedField(read_only = True)
     class Meta:
         model = GameTrackerUser
-        fields = ["id", "email", "profile_picture",]
+        fields = ["id", "email", "password", "profile_picture",]
+        read_only_fields = ["id",]
+
+    def create(self, validated_data):
+        return GameTrackerUser.objects.create_user(**validated_data)

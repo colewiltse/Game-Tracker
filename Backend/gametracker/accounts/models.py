@@ -35,7 +35,7 @@ class GameTrackerUser(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
 
-    objects = GameTrackerUserManager()
+    objects: GameTrackerUserManager = GameTrackerUserManager()
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
