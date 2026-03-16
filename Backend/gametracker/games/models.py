@@ -32,6 +32,7 @@ class Game(models.Model):
     console = models.CharField(max_length=30, choices=CONSOLES)
     description = models.CharField(max_length=200)
     owner = models.ForeignKey('accounts.GameTrackerUser', on_delete=models.CASCADE)
+    box_art = models.ImageField(upload_to='game_pics/', blank=True, null=True) 
 
     def __str__(self) -> str:
         return self.title + " - " + self.console
