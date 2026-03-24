@@ -25,7 +25,7 @@ const LoginPage = ({ setIsLoggedIn }) => {
                 localStorage.setItem('userId', json.id);
                 localStorage.setItem('email', data.get('email'));
                 setIsLoggedIn(true);
-                navigate('/');
+                navigate('/game_list');
             }
             else if ('detail' in json) {
                 setError("Incorrect email or password.");
