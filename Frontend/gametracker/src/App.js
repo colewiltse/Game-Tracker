@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import React, { useState } from 'react';
 
 import MainLayout from './pages/main_layout';
-import PlainLayout from './plain_layout';
+import PlainLayout from './pages/plain_layout';
 
 import HomePage from './pages/home_page';
 import LoginPage from './pages/login_page';
