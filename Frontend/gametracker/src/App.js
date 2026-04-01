@@ -9,6 +9,8 @@ import HomePage from './pages/home_page';
 import LoginPage from './pages/login_page';
 import GameListPage from './pages/game_list_page';
 import GameDetailPage from './pages/game_detail_page';
+import CreateAccountPage from './pages/create_account_page';
+import GameCreate from './pages/game_create_page';
 
 
 function App() {
@@ -21,12 +23,14 @@ function App() {
         <Route element={<PlainLayout />}>
           <Route path="/" element={<HomePage isLoggedIn={isLoggedIn}/>} />
           <Route path="/login" element={<LoginPage setIsLoggedIn={setIsLoggedIn}/>} />
+          <Route path="/create_account" element={<CreateAccountPage setIsLoggedIn={setIsLoggedIn}/>}/>
         </Route>
 
         {/* Routes WITH navbar */}
-        <Route element={<MainLayout />}>
+        <Route element={<MainLayout isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>}>
           <Route path="/game_list" element={<GameListPage isLoggedIn={isLoggedIn}/>} />
           <Route path="games/:id/" element={<GameDetailPage isLoggedIn={isLoggedIn}/>}/>
+          <Route path="/game_create" element={<GameCreate isLoggedIn={isLoggedIn}/>} />
         </Route>
 
 

@@ -12,6 +12,7 @@ import Form from 'react-bootstrap/Form';
 const GameList = ({isLoggedIn}) => {
     const [games, setGames] = useState([]);
     const [currPage, setCurrPage] = useState('http://localhost:8000/games/');
+    const [consoles, setConsoles] = useState([]);
     const [filterValues, setFilterValues] = useState({
         console: '',
         search: '',
@@ -33,6 +34,13 @@ const GameList = ({isLoggedIn}) => {
             [filter]: value,
         }));
     };
+
+    useEffect(() => {
+        fetch("http://localhost:8000/consoles/")
+            .then(response => response.json())
+            .then(data => setConsoles(data))
+            .catch(err => console.error(err));
+    }, []);
 
 
     useEffect(() => {        
@@ -65,9 +73,11 @@ const GameList = ({isLoggedIn}) => {
                     <Col className='auto'>
                         <Form.Select value={filterValues.console} onChange={(event) => handleFilterChange('console', event.target.value)}>
                             <option value="">All</option>
-                            <option value="ps5">PS5</option>
-                            <option value="nes">NES</option>
-                            <option value="other">Other</option>
+                            {consoles.map(console => (
+                                <option key={console.value} value={console.value}>
+                                {console.label}
+                                </option>
+                            ))}
                         </Form.Select>
                     </Col>
 

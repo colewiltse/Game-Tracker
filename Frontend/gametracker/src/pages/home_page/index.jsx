@@ -39,9 +39,11 @@ const HomePage = ({isLoggedIn}) => {
                     Log In
                 </Button>
                 </Link>
+                <Link to="/create_account">
                 <Button className="btn btn-danger">
                     Create Account
                 </Button>
+                </Link>
                 </div>
             </Container>
         </>

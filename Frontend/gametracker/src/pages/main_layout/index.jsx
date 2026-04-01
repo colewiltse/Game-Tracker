@@ -1,11 +1,17 @@
 import { Outlet, Link } from "react-router-dom";
 import React from 'react';
 import MyNavBar from '../../components/MyNavBar';
+import { Navigate } from "react-router-dom";
 
-const MainLayout = () => {
+const MainLayout = ({isLoggedIn, setIsLoggedIn}) => {
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" replace />;
+  }
+
   return (
     <>
-      <MyNavBar />
+      <MyNavBar setIsLoggedIn={setIsLoggedIn}/>
       <Outlet />
     </>
   );

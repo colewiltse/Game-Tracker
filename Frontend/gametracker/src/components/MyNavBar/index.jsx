@@ -2,9 +2,22 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/esm/Container';
 import NavbarBrand from 'react-bootstrap/esm/NavbarBrand';
 import Navbar from 'react-bootstrap/Navbar';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
-export default function MyNavBar() {
+
+export default function MyNavBar({ setIsLoggedIn }) {
+
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+    localStorage.removeItem('access');
+    localStorage.removeItem('refresh');
+    setIsLoggedIn(false); 
+    navigate('/login');
+    };
+
     return(
        <Navbar expand="lg" className="bg-body-tertiary">
         <Container className='fluid'>
@@ -13,9 +26,13 @@ export default function MyNavBar() {
             </NavbarBrand>
 
             <div>
+                <Link to="/game_create">
                 <Button variant="success">Add Game</Button>
+                </Link>
+                
                 <Button variant="info">Profile</Button>
-                <Button variant="danger">Log Out</Button>
+
+                <Button variant="danger" onClick={handleLogout}>Log Out</Button>
             </div>
 
         </Container>
