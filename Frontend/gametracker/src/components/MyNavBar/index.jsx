@@ -7,14 +7,14 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-export default function MyNavBar({ setIsLoggedIn }) {
+export default function MyNavBar() {
 
     const navigate = useNavigate();
 
     const handleLogout = () => {
     localStorage.removeItem('access');
     localStorage.removeItem('refresh');
-    setIsLoggedIn(false); 
+    localStorage.removeItem('email');
     navigate('/login');
     };
 

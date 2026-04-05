@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 
-const AccountEditPage = ({ setIsLoggedIn }) => {
+const AccountEditPage = () => {
     const apiUrl = `/user/info/`
     const navigate = useNavigate();
     const [error, setError] = useState("");
@@ -59,7 +59,7 @@ const AccountEditPage = ({ setIsLoggedIn }) => {
         <>
             <meta charSet="utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <title>Bootstrap demo</title>
+            <title>Game Tracker</title>
             <link
                 href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
                 rel="stylesheet"

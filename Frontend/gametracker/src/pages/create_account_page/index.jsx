@@ -1,14 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
+import API_BASE from '../../base_url';
 
 import Container from "react-bootstrap/Container";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 
-const CreateAccountPage = ({ setIsLoggedIn }) => {
-    const createAccountUrl = 'http://localhost:8000/user/';
-    const loginUrl = 'http://localhost:8000/api/token/';
+const CreateAccountPage = () => {
+    const createAccountUrl = `${API_BASE}/user/`;
+    const loginUrl = `${API_BASE}/api/token/`;
     const navigate = useNavigate();
     const [error, setError] = useState("");
 
@@ -31,9 +32,7 @@ const CreateAccountPage = ({ setIsLoggedIn }) => {
                     if ('access' in json) {
                         localStorage.setItem('access', json.access);
                         localStorage.setItem('refresh', json.refresh);
-                        localStorage.setItem('userId', json.id);
                         localStorage.setItem('email', data.get('email'));
-                        setIsLoggedIn(true);
                         navigate('/game_list');
                     }
                     else {
@@ -63,7 +62,7 @@ const CreateAccountPage = ({ setIsLoggedIn }) => {
         <>
             <meta charSet="utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <title>Bootstrap demo</title>
+            <title>Game Tracker</title>
             <link
                 href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
                 rel="stylesheet"

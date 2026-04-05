@@ -3,8 +3,7 @@ import React from 'react';
 import MyNavBar from '../../components/MyNavBar';
 import { Navigate } from "react-router-dom";
 
-const MainLayout = ({isLoggedIn, setIsLoggedIn}) => {
-
+const MainLayout = () => {
 
   if (!localStorage.getItem("access")) {
     return <Navigate to="/login" replace />;
@@ -12,8 +11,8 @@ const MainLayout = ({isLoggedIn, setIsLoggedIn}) => {
 
   return (
     <>
-      <MyNavBar setIsLoggedIn={setIsLoggedIn}/>
-      <Outlet />
+      <MyNavBar/>
+      <Outlet/>
     </>
   );
 };

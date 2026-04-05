@@ -5,20 +5,12 @@ import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-
-const HomePage = ({isLoggedIn}) => {
-    if (isLoggedIn) {
-        console.log('We Logged In!!!')
-    } else {
-        console.log('Not logged in yet')
-    }
-
+const HomePage = () => {
     return (
-        
         <>
             <meta charSet="utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <title>Bootstrap demo</title>
+            <title>Game Tracker</title>
             <link
                 rel="stylesheet"
                 href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"

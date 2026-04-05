@@ -11,23 +11,7 @@ import CardText from 'react-bootstrap/esm/CardText';
 import { Link } from 'react-router-dom';
 
 
-const AccountInfo = ({isLoggedIn}) => {
-    const [game, setGame] = useState(null);
-    const { id } = useParams();
-    const navigate = useNavigate();
-    const accessToken = localStorage.getItem('access');
-
-    // useEffect(() => {
-    //     const apiUrl = `/games/${id}/`
-
-    //     fetchWithAuth(apiUrl,{})
-    //         .then(response => response.json())
-    //         .then(data => setGame(data))
-            
-    //         .catch(error => {
-    //             console.error('Error fetching game data:', error);
-    //         });
-    // }, [id, accessToken]);
+const AccountInfo = () => {
 
     return (
         <Container className='sm mt-3' style={{ maxWidth: 600 }}>

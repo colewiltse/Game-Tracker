@@ -11,11 +11,10 @@ import CardText from 'react-bootstrap/esm/CardText';
 import { Link } from 'react-router-dom';
 
 
-const GameDetail = ({isLoggedIn}) => {
+const GameDetail = () => {
     const [game, setGame] = useState(null);
     const { id } = useParams();
     const navigate = useNavigate();
-    const accessToken = localStorage.getItem('access');
 
     useEffect(() => {
         const apiUrl = `/games/${id}/`
@@ -27,7 +26,7 @@ const GameDetail = ({isLoggedIn}) => {
             .catch(error => {
                 console.error('Error fetching game data:', error);
             });
-    }, [id, accessToken]);
+    }, [id]);
 
     const handleDelete = () => {
         const confirmDelete = window.confirm("Are you sure you want to delete this game?");

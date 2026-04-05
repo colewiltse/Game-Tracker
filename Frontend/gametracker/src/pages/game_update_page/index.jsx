@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import API_BASE from '../../base_url';
 
 import Container from 'react-bootstrap/Container';
 import Row from "react-bootstrap/Row";
@@ -11,10 +12,9 @@ import CardText from 'react-bootstrap/esm/CardText';
 import { fetchWithAuth } from '../../api';
 
 
-const GameUpdate = ({isLoggedIn}) => {
+const GameUpdate = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const accessToken = localStorage.getItem('access');
     const updateGameUrl = `/games/${id}/`;
 
     const [consoles, setConsoles] = useState([]);
@@ -28,13 +28,9 @@ const GameUpdate = ({isLoggedIn}) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const apiUrl = `http://localhost:8000/games/${id}/`
+        const apiUrl = `/games/${id}/`
 
-        fetch(apiUrl,
-            {headers: {
-            "Authorization": `Bearer ${accessToken}`,
-            },}
-        )
+        fetchWithAuth(apiUrl,{})
             .then(response => response.json())
             .then(data => setFormData(data))
             .then(setLoading(false))
@@ -42,12 +38,12 @@ const GameUpdate = ({isLoggedIn}) => {
             .catch(error => {
                 console.error('Error fetching game data:', error);
             });
-    }, [id, accessToken]);
+    }, [id]);
 
 
 
     useEffect(() => {
-            fetch("http://localhost:8000/consoles/")
+            fetch(`${API_BASE}/consoles/`)
                 .then(response => response.json())
                 .then(data => setConsoles(data))
                 .catch(err => console.error(err));

@@ -1,30 +1,30 @@
 import GameCard from '../../components/GameCard';
 import React, { useEffect, useState } from 'react';
+import API_BASE from '../../base_url';
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { fetchWithAuth } from '../../api';
 
 
 
-const GameList = ({isLoggedIn}) => {
+const GameList = () => {
     const [games, setGames] = useState([]);
-    const [currPage, setCurrPage] = useState('http://localhost:8000/games/');
+    const [currPage, setCurrPage] = useState(`/games/?ordering=-created`);
     const [consoles, setConsoles] = useState([]);
     const [filterValues, setFilterValues] = useState({
         console: '',
         search: '',
         ordering: '',
     });
-    // const gameListUrl = 'http://localhost:8000/games/';
-    const accessToken = localStorage.getItem('access');
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const currentQueryParams = new URLSearchParams(filterValues);
-        const newUrl = `http://localhost:8000/games/?${currentQueryParams.toString()}`;
+        const newUrl = `/games/?${currentQueryParams.toString()}`;
         setCurrPage(newUrl);
     };
 
@@ -36,7 +36,7 @@ const GameList = ({isLoggedIn}) => {
     };
 
     useEffect(() => {
-        fetch("http://localhost:8000/consoles/")
+        fetch(`${API_BASE}/consoles/`)
             .then(response => response.json())
             .then(data => setConsoles(data))
             .catch(err => console.error(err));
@@ -44,11 +44,7 @@ const GameList = ({isLoggedIn}) => {
 
 
     useEffect(() => {        
-        fetch(currPage, {
-            headers: {
-            Authorization: `Bearer ${accessToken}`,
-            },
-        })
+        fetchWithAuth(currPage, {})
             .then(response => response.json())
             .then(data => {
                 console.log(data);

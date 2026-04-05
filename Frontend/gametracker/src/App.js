@@ -17,26 +17,25 @@ import AccountEditPage from './pages/account_edit_page';
 
 
 function App() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
     <BrowserRouter>
       <Routes>
 
         {/* Routes WITHOUT navbar */}
         <Route element={<PlainLayout />}>
-          <Route path="/" element={<HomePage isLoggedIn={isLoggedIn}/>} />
-          <Route path="/login" element={<LoginPage setIsLoggedIn={setIsLoggedIn}/>} />
-          <Route path="/create_account" element={<CreateAccountPage setIsLoggedIn={setIsLoggedIn}/>}/>
+          <Route path="/" element={<HomePage/>} />
+          <Route path="/login" element={<LoginPage/>} />
+          <Route path="/create_account" element={<CreateAccountPage/>}/>
         </Route>
 
         {/* Routes WITH navbar */}
-        <Route element={<MainLayout isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>}>
-          <Route path="/game_list" element={<GameListPage isLoggedIn={isLoggedIn}/>} />
-          <Route path="games/:id/" element={<GameDetailPage isLoggedIn={isLoggedIn}/>}/>
-          <Route path="/game_create" element={<GameCreate isLoggedIn={isLoggedIn}/>} />
-          <Route path="game_update/:id/" element={<GameUpdate isLoggedIn={isLoggedIn}/>}/>
-          <Route path="/account_info" element={<AccountInfo isLoggedIn={isLoggedIn}/>} />
-          <Route path="/account_edit" element={<AccountEditPage isLoggedIn={isLoggedIn}/>} />
+        <Route element={<MainLayout/>}>
+          <Route path="/game_list" element={<GameListPage/>} />
+          <Route path="games/:id/" element={<GameDetailPage/>}/>
+          <Route path="/game_create" element={<GameCreate/>} />
+          <Route path="game_update/:id/" element={<GameUpdate/>}/>
+          <Route path="/account_info" element={<AccountInfo/>} />
+          <Route path="/account_edit" element={<AccountEditPage/>} />
         </Route>
 
 

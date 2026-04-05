@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import API_BASE from '../../base_url';
 
 import Container from 'react-bootstrap/Container';
 import Row from "react-bootstrap/Row";
@@ -8,12 +9,12 @@ import Card from "react-bootstrap/Card";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import CardText from 'react-bootstrap/esm/CardText';
+import { fetchWithAuth } from '../../api';
 
 
-const GameCreate = ({isLoggedIn}) => {
+const GameCreate = () => {
     const navigate = useNavigate();
-    const accessToken = localStorage.getItem('access');
-    const createGameUrl = 'http://localhost:8000/games/';
+    const createGameUrl = '/games/';
 
     const [consoles, setConsoles] = useState([]);
     const [formData, setFormData] = useState({
@@ -25,7 +26,7 @@ const GameCreate = ({isLoggedIn}) => {
     const [error, setError] = useState("");
 
     useEffect(() => {
-            fetch("http://localhost:8000/consoles/")
+            fetch(`${API_BASE}/consoles/`)
                 .then(response => response.json())
                 .then(data => setConsoles(data))
                 .catch(err => console.error(err));
@@ -48,11 +49,9 @@ const GameCreate = ({isLoggedIn}) => {
     function handleSubmit(event) {
         let data = new FormData(event.target);
 
-        fetch(createGameUrl, {
+        fetchWithAuth(createGameUrl, {
             method: "POST",
             body: data,
-            headers: {
-            "Authorization": `Bearer ${accessToken}`,}
         })
         .then(request => request.json())
         .then(json => {

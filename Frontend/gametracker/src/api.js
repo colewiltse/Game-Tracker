@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:8000";
+const API_BASE = process.env.REACT_APP_BASE_URL;
 
 export const fetchWithAuth = async (url, options = {}) => {
   let accessToken = localStorage.getItem("access");
