@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { fetchWithAuth } from '../../api';
 
 import Container from 'react-bootstrap/Container';
 import Row from "react-bootstrap/Row";
@@ -7,6 +8,7 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Button from 'react-bootstrap/Button';
 import CardText from 'react-bootstrap/esm/CardText';
+import { Link } from 'react-router-dom';
 
 
 const GameDetail = ({isLoggedIn}) => {
@@ -16,13 +18,9 @@ const GameDetail = ({isLoggedIn}) => {
     const accessToken = localStorage.getItem('access');
 
     useEffect(() => {
-        const apiUrl = `http://localhost:8000/games/${id}/`
+        const apiUrl = `/games/${id}/`
 
-        fetch(apiUrl,
-            {headers: {
-            "Authorization": `Bearer ${accessToken}`,
-          },}
-        )
+        fetchWithAuth(apiUrl,{})
             .then(response => response.json())
             .then(data => setGame(data))
             
@@ -31,16 +29,18 @@ const GameDetail = ({isLoggedIn}) => {
             });
     }, [id, accessToken]);
 
-    // const handleApply = () => {
-    //     // Redirect to the application page with the pet ID in the URL
-    //     if (!is_logged_in){
-    //       navigate('../login');
-    //     }
-    //     else {
-    //       navigate(`/applications/${id}`);
-    //     }
-        
-    // };
+    const handleDelete = () => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this game?");
+    
+        if (!confirmDelete) return;
+
+        fetchWithAuth(`/games/${id}/`, {method: "DELETE",})
+            .then(navigate('/game_list'))
+
+            .catch(error => {
+                console.error("Error deleting game:", error);
+            });
+    };
 
     if (!game) {
         return <div>Loading...</div>;
@@ -60,7 +60,16 @@ const GameDetail = ({isLoggedIn}) => {
                             <Card.Text>Console: {game.console_display}</Card.Text>
 
                             <Card.Text>Description: {game.description} </Card.Text>
-                              
+
+                            <div className="d-flex gap-2 mt-3">
+                                <Link to={`/game_update/${id}`}>
+                                    <Button variant="primary">Edit</Button>
+                                </Link>
+
+                                <Button variant="danger" onClick={handleDelete}>
+                                    Delete
+                                </Button>
+                            </div> 
                         </Card.Body>
                     </Card>
                 </Col>

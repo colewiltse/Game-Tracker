@@ -12,10 +12,10 @@ class GameTrackerUserCreate(CreateAPIView):
     serializer_class = GameTrackerUserSerializer
 
 class GameTrackerUserDetail(RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = GameTrackerUserSerializer
-    def get_queryset(self):
-       return GameTrackerUser.objects.filter(id=self.kwargs['pk'])
+    def get_object(self):
+        return self.request.user
     
 
 class AdminGameTrackerUserList(ListAPIView):

@@ -11,6 +11,9 @@ import GameListPage from './pages/game_list_page';
 import GameDetailPage from './pages/game_detail_page';
 import CreateAccountPage from './pages/create_account_page';
 import GameCreate from './pages/game_create_page';
+import GameUpdate from './pages/game_update_page';
+import AccountInfo from './pages/account_info_page';
+import AccountEditPage from './pages/account_edit_page';
 
 
 function App() {
@@ -31,6 +34,9 @@ function App() {
           <Route path="/game_list" element={<GameListPage isLoggedIn={isLoggedIn}/>} />
           <Route path="games/:id/" element={<GameDetailPage isLoggedIn={isLoggedIn}/>}/>
           <Route path="/game_create" element={<GameCreate isLoggedIn={isLoggedIn}/>} />
+          <Route path="game_update/:id/" element={<GameUpdate isLoggedIn={isLoggedIn}/>}/>
+          <Route path="/account_info" element={<AccountInfo isLoggedIn={isLoggedIn}/>} />
+          <Route path="/account_edit" element={<AccountEditPage isLoggedIn={isLoggedIn}/>} />
         </Route>
 
 

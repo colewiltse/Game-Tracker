@@ -22,6 +22,7 @@ const LoginPage = ({ setIsLoggedIn }) => {
         .then(json => {
             if ('access' in json) {
                 localStorage.setItem('access', json.access);
+                localStorage.setItem('refresh', json.refresh);
                 localStorage.setItem('userId', json.id);
                 localStorage.setItem('email', data.get('email'));
                 setIsLoggedIn(true);

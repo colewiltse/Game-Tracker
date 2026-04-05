@@ -5,7 +5,8 @@ import { Navigate } from "react-router-dom";
 
 const MainLayout = ({isLoggedIn, setIsLoggedIn}) => {
 
-  if (!isLoggedIn) {
+
+  if (!localStorage.getItem("access")) {
     return <Navigate to="/login" replace />;
   }
 

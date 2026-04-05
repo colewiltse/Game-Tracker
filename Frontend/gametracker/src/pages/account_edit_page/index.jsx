@@ -1,61 +1,57 @@
-import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-
+import { fetchWithAuth } from '../../api';
+import { useNavigate } from 'react-router-dom';
 import Container from "react-bootstrap/Container";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 
-const CreateAccountPage = ({ setIsLoggedIn }) => {
-    const createAccountUrl = 'http://localhost:8000/user/';
-    const loginUrl = 'http://localhost:8000/api/token/';
+const AccountEditPage = ({ setIsLoggedIn }) => {
+    const apiUrl = `/user/info/`
     const navigate = useNavigate();
     const [error, setError] = useState("");
+    const [formData, setFormData] = useState({
+        email: localStorage.getItem("email"),
+        password: '',
+    });
+
+    const handleChange = (e) => {
+        setFormData({
+        ...formData,
+        [e.target.name]: e.target.value,
+        });
+    };
 
     function handleSubmit(event) {
-        let data = new FormData(event.target);
+        event.preventDefault();
+        const data = new FormData();
 
-        fetch(createAccountUrl, {
-            method: "POST",
+        if(formData.email){
+            data.append("email", formData.email)
+        }
+
+        if(formData.password){
+            data.append("password", formData.password)
+        }
+
+        fetchWithAuth(apiUrl, {
+            method: "PATCH",
             body: data,
         })
         .then(request => request.json())
         .then(json => {
             if ('id' in json) {
-                fetch(loginUrl, {
-                    method: "POST",
-                    body: data,
-                })
-                .then(request => request.json())
-                .then(json => {
-                    if ('access' in json) {
-                        localStorage.setItem('access', json.access);
-                        localStorage.setItem('refresh', json.refresh);
-                        localStorage.setItem('userId', json.id);
-                        localStorage.setItem('email', data.get('email'));
-                        setIsLoggedIn(true);
-                        navigate('/game_list');
-                    }
-                    else {
-                        setError("Unknown error while signing in. Please try again later.")
-                    }
-                })
-            }
-            else if ('email' in json) {
-                setError("Account with thie email already exists.");
+                localStorage.setItem('email', data.get('email'));
+                navigate('/account_info');
             }
             else {
-                setError("Unknown error while signing in. Please try again later.")
+                setError("Unknown error. Please try again later.")
             }
         })
         .catch(error => {
             console.error(error);
             setError("Unable to connect to server. Please try again later.");
         });
-
-        event.preventDefault();
-
-
     }
 
 
@@ -78,20 +74,20 @@ const CreateAccountPage = ({ setIsLoggedIn }) => {
                     width={300}
                     alt="..."
                 />
-                <h2 className="mb-3">Create Account</h2>
+                <h2 className="mb-3">Edit Account</h2>
 
                 <Form.Group className="mb-3" controlId='formBasicEmail'>
                     <Form.Label>
                     Email
                     </Form.Label>
-                    <Form.Control type='email' id='email' name='email'/>
+                    <Form.Control type='email' id='email' name='email' value={formData.email} onChange={handleChange}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3">
                     <Form.Label>
                     Password
                     </Form.Label>
-                    <Form.Control type="password" id="password" name="password"/>
+                    <Form.Control type="password" id="password" name="password" value={formData.password} onChange={handleChange}/>
                 </Form.Group>
 
                 {error && (
@@ -110,4 +106,4 @@ const CreateAccountPage = ({ setIsLoggedIn }) => {
 
 };
 
-export default CreateAccountPage;
+export default AccountEditPage;

@@ -21,7 +21,7 @@ export default function MyNavBar({ setIsLoggedIn }) {
     return(
        <Navbar expand="lg" className="bg-body-tertiary">
         <Container className='fluid'>
-            <NavbarBrand href='/game_list'>
+            <NavbarBrand as={Link} to="/game_list">
                 <img src='/Game Tracker Logo Sized.png' alt="logo" width="200" height="35"/>
             </NavbarBrand>
 
@@ -30,7 +30,9 @@ export default function MyNavBar({ setIsLoggedIn }) {
                 <Button variant="success">Add Game</Button>
                 </Link>
                 
+                <Link to="/account_info">
                 <Button variant="info">Profile</Button>
+                </Link>
 
                 <Button variant="danger" onClick={handleLogout}>Log Out</Button>
             </div>
