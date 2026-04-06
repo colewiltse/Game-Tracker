@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import API_BASE from '../../base_url';
+import ErrorAlert from '../../components/ErrorAlert';
 
 import Container from 'react-bootstrap/Container';
 import Row from "react-bootstrap/Row";
@@ -18,9 +19,12 @@ const GameUpdate = () => {
     const updateGameUrl = `/games/${id}/`;
 
     const [consoles, setConsoles] = useState([]);
+    const [genres, setGenres] = useState([]);
     const [formData, setFormData] = useState({
         title: '',
         console: '',
+        release_year: '',
+        genre: '',
         description: '',
         box_art: null,
     });
@@ -32,11 +36,13 @@ const GameUpdate = () => {
 
         fetchWithAuth(apiUrl,{})
             .then(response => response.json())
-            .then(data => setFormData(data))
-            .then(setLoading(false))
-            
+            .then(data => {
+                setFormData(data);
+                setLoading(false);
+            })
             .catch(error => {
-                console.error('Error fetching game data:', error);
+                console.error(error);
+                setError("Error fetching game data.");
             });
     }, [id]);
 
@@ -46,7 +52,20 @@ const GameUpdate = () => {
             fetch(`${API_BASE}/consoles/`)
                 .then(response => response.json())
                 .then(data => setConsoles(data))
-                .catch(err => console.error(err));
+                .catch(error => {
+                    console.error(error);
+                    setError("Error fetching consoles.");
+                });
+        }, []);
+
+    useEffect(() => {
+            fetch(`${API_BASE}/genres/`)
+                .then(response => response.json())
+                .then(data => setGenres(data))
+                .catch(error => {
+                    console.error(error);
+                    setError("Error fetching genres.");
+                });
         }, []);
 
   const handleChange = (e) => {
@@ -66,14 +85,12 @@ const GameUpdate = () => {
     function handleSubmit(event) {
         event.preventDefault();
 
-        const data = new FormData();
-
-        data.append("title", formData.title);
-        data.append("console", formData.console);
-        data.append("description", formData.description);
+        const data = new FormData(event.target);
 
         if (formData.box_art instanceof File) {
-            data.append("box_art", formData.box_art);
+            data.set("box_art", formData.box_art);
+        } else {
+            data.delete("box_art"); 
         }
 
         fetchWithAuth(updateGameUrl, {
@@ -94,9 +111,6 @@ const GameUpdate = () => {
             setError("Unable to connect to server. Please try again later.");
         });
 
-        event.preventDefault();
-
-
     }
 
     if (loading) {
@@ -105,6 +119,7 @@ const GameUpdate = () => {
 
     return (
         <Container>
+            <ErrorAlert error={error} />
             <Form onSubmit={handleSubmit}>
             <Row xs={1} md={2} className="mx-auto d-flex align-items-top g-4 mt-2 mb-1 mx-5">
                 <Col>
@@ -120,7 +135,7 @@ const GameUpdate = () => {
                                 <Form.Label>
                                     Title
                                 </Form.Label>
-                                <Form.Control name='title' value={formData.title} onChange={handleChange} type="text"/>
+                                <Form.Control name='title' value={formData.title} onChange={handleChange} type="text" required/>
                             </Form.Group>
 
                             <Form.Group>
@@ -136,12 +151,41 @@ const GameUpdate = () => {
                                 </Form.Select>
                             </Form.Group>
 
+                            <Form.Group>
+                                <Form.Label>
+                                    Release Year
+                                </Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    name="release_year"
+                                    value={formData.release_year}
+                                    onChange={handleChange}
+                                    min="1950"
+                                    max={new Date().getFullYear()}
+                                />
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>
+                                    Genre
+                                </Form.Label>
+                                <Form.Select 
+                                    name='genre' 
+                                    value={formData.genre} 
+                                    onChange={handleChange}>
+                                    {genres.map(genre => (
+                                        <option key={genre.value} value={genre.value}>
+                                        {genre.label}
+                                        </option>
+                                    ))}
+                                </Form.Select>
+                            </Form.Group>
 
                             <Form.Group>
                                 <Form.Label>
                                     Description
                                 </Form.Label>
-                                <Form.Control name='description' value={formData.description} onChange={handleChange} type="text"/>
+                                <Form.Control name='description' value={formData.description} onChange={handleChange} type="text" required/>
                             </Form.Group>
 
 
@@ -156,7 +200,7 @@ const GameUpdate = () => {
                                 />
                             </Form.Group>
 
-                            <Button type="submit" className="btn btn-primary">
+                            <Button type="submit" className="btn btn-primary mt-3">
                                 Submit
                             </Button>
                               

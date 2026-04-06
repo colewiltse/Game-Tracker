@@ -1,5 +1,7 @@
 from django.db import models
 from accounts.models import GameTrackerUser
+from django.core.validators import MinValueValidator, MaxValueValidator
+import datetime
 
 
 CONSOLES = (
@@ -25,11 +27,36 @@ CONSOLES = (
     ('other', 'Other'),
 )
 
+GAME_GENRES = (
+    ('action', 'Action'),
+    ('action-adventure', 'Action-Adventure'),
+    ('adventure', 'Adventure'),
+    ('horror', 'Horror'),
+    ('party', 'Party'),
+    ('platformer', 'Platformer'),
+    ('puzzle', 'Puzzle'),
+    ('rpg', 'RPG'),
+    ('shooter', 'Shooter'),
+    ('simulation', 'Simulation'),
+    ('sports/racing', 'Sports/Racing'),
+    ('strategy', 'Strategy'),
+    ('other', 'Other'),
+)
+
 # Create your models here.
 class Game(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=50)
     console = models.CharField(max_length=30, choices=CONSOLES)
+    release_year = models.PositiveIntegerField(
+        validators=[
+            MinValueValidator(1950),
+            MaxValueValidator(datetime.date.today().year)
+        ],
+        blank=True,
+        null=True
+    )
+    genre = models.CharField(max_length=30, choices=GAME_GENRES)
     description = models.CharField(max_length=200)
     owner = models.ForeignKey('accounts.GameTrackerUser', on_delete=models.CASCADE)
     box_art = models.ImageField(upload_to='game_pics/', blank=True, null=True) 

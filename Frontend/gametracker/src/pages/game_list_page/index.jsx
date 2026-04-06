@@ -1,6 +1,7 @@
 import GameCard from '../../components/GameCard';
 import React, { useEffect, useState } from 'react';
 import API_BASE from '../../base_url';
+import ErrorAlert from '../../components/ErrorAlert';
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -13,13 +14,15 @@ import { fetchWithAuth } from '../../api';
 
 const GameList = () => {
     const [games, setGames] = useState([]);
-    const [currPage, setCurrPage] = useState(`/games/?ordering=-created`);
+    const [currPage, setCurrPage] = useState('/games/');
     const [consoles, setConsoles] = useState([]);
+    const [genres, setGenres] = useState([]);
     const [filterValues, setFilterValues] = useState({
         console: '',
         search: '',
         ordering: '',
     });
+    const [error, setError] = useState("");
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -39,7 +42,20 @@ const GameList = () => {
         fetch(`${API_BASE}/consoles/`)
             .then(response => response.json())
             .then(data => setConsoles(data))
-            .catch(err => console.error(err));
+            .catch(error => {
+            console.error(error);
+            setError("Error fetching consoles.");
+            });
+    }, []);
+
+    useEffect(() => {
+        fetch(`${API_BASE}/genres/`)
+            .then(response => response.json())
+            .then(data => setGenres(data))
+            .catch(error => {
+            console.error(error);
+            setError("Error fetching genres.");
+            });
     }, []);
 
 
@@ -51,15 +67,17 @@ const GameList = () => {
                 setGames(data);
             })
             .catch(error => {
-                console.error('Error fetching games:', error);
+            console.error(error);
+            setError("Error fetching games.");
             });
     }, [currPage]); 
 
 
     return(
         <Container>
+            <ErrorAlert error={error}/>
             <Form onSubmit={handleSubmit}>            
-                <Row className='g-3 mb-3 align-items-center justify-content-center'>
+                <Row className='g-3 mb-3 mt-1 align-items-center justify-content-center'>
                     <Col className='auto'>
                         <Form.Label className='col-form-label'>
                             Console
@@ -72,6 +90,23 @@ const GameList = () => {
                             {consoles.map(console => (
                                 <option key={console.value} value={console.value}>
                                 {console.label}
+                                </option>
+                            ))}
+                        </Form.Select>
+                    </Col>
+
+                    <Col className='auto'>
+                        <Form.Label className='col-form-label'>
+                            Genre
+                        </Form.Label>
+                    </Col>
+
+                    <Col className='auto'>
+                        <Form.Select value={filterValues.genre} onChange={(event) => handleFilterChange('genre', event.target.value)}>
+                            <option value="">None</option>
+                            {genres.map(genre => (
+                                <option key={genre.value} value={genre.value}>
+                                {genre.label}
                                 </option>
                             ))}
                         </Form.Select>
@@ -99,6 +134,7 @@ const GameList = () => {
                             <option value="created">Least Recent First</option>
                             <option value="title">Title A-Z</option>
                             <option value="-title">Title Z-A</option>
+                            <option value="release_year">Release Year</option>
                         </Form.Select>
                     </Col>
 

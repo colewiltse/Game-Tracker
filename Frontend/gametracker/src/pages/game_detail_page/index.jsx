@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchWithAuth } from '../../api';
+import ErrorAlert from '../../components/ErrorAlert';
 
 import Container from 'react-bootstrap/Container';
 import Row from "react-bootstrap/Row";
@@ -13,6 +14,7 @@ import { Link } from 'react-router-dom';
 
 const GameDetail = () => {
     const [game, setGame] = useState(null);
+    const [error, setError] = useState("");
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -24,7 +26,8 @@ const GameDetail = () => {
             .then(data => setGame(data))
             
             .catch(error => {
-                console.error('Error fetching game data:', error);
+            console.error(error);
+            setError("Error fetching game data.");
             });
     }, [id]);
 
@@ -37,7 +40,8 @@ const GameDetail = () => {
             .then(navigate('/game_list'))
 
             .catch(error => {
-                console.error("Error deleting game:", error);
+            console.error(error);
+            setError("Error deleting game.");
             });
     };
 
@@ -47,6 +51,7 @@ const GameDetail = () => {
 
     return (
         <Container>
+            <ErrorAlert error={error}/>
             <Row xs={1} md={2} className="mx-auto d-flex align-items-top g-4 mt-2 mb-1 mx-5">
                 <Col>
                     <img src={game.box_art !== null ? `${game.box_art}` : "/no_game_image.jpg"} alt="Game Art" className="img-fluid card" />
@@ -57,6 +62,10 @@ const GameDetail = () => {
                         <Card.Body>
                             <Card.Title className='mb-3'>{game.title}</Card.Title>
                             <Card.Text>Console: {game.console_display}</Card.Text>
+
+                            <Card.Text>Release Year: {game.release_year} </Card.Text>
+
+                            <Card.Text>Genre: {game.genre_display} </Card.Text>
 
                             <Card.Text>Description: {game.description} </Card.Text>
 

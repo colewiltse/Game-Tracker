@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Container from "react-bootstrap/Container";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import ErrorAlert from '../../components/ErrorAlert';
 
 
 const AccountEditPage = () => {
@@ -50,7 +51,7 @@ const AccountEditPage = () => {
         })
         .catch(error => {
             console.error(error);
-            setError("Unable to connect to server. Please try again later.");
+            setError("Error updating account");
         });
     }
 
@@ -84,11 +85,8 @@ const AccountEditPage = () => {
                     <Form.Control type="password" id="password" name="password" value={formData.password} onChange={handleChange}/>
                 </Form.Group>
 
-                {error && (
-                    <div className="alert alert-danger mt-3" role="alert">
-                        {error}
-                    </div>
-                )}
+                <ErrorAlert error={error} />
+                
                 <Button type="submit" className="btn btn-primary">
                     Submit
                 </Button>

@@ -8,17 +8,17 @@ from rest_framework import permissions
 from games.serializers import GameSerializer
 from games.models import Game
 from games.permissions import IsOwner
-from games.models import CONSOLES
+from games.models import CONSOLES, GAME_GENRES
 
 # Create your views here.
 class GameTrackerListCreate(ListCreateAPIView):
     serializer_class = GameSerializer
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['console']
-    search_fields = ['title']
-    ordering_fields = ['title', 'console', 'created']
-    ordering = ['created']
+    filterset_fields = ['console', 'genre']
+    search_fields = ['title', 'description']
+    ordering_fields = ['title', 'console', 'created', 'release_year']
+    ordering = ['-created']
 
     def get_queryset(self):
         return Game.objects.filter(owner=self.request.user)
@@ -42,3 +42,12 @@ class ConsoleList(APIView):
             for key, label in CONSOLES
         ]
         return Response(consoles)
+
+class GenreList(APIView):
+    permission_classes = [permissions.AllowAny]
+    def get(self, request):
+        genres = [
+            {"value": key, "label": label}
+            for key, label in GAME_GENRES
+        ]
+        return Response(genres)

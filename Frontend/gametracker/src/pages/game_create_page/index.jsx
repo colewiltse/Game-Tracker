@@ -10,6 +10,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import CardText from 'react-bootstrap/esm/CardText';
 import { fetchWithAuth } from '../../api';
+import ErrorAlert from '../../components/ErrorAlert';
 
 
 const GameCreate = () => {
@@ -17,9 +18,12 @@ const GameCreate = () => {
     const createGameUrl = '/games/';
 
     const [consoles, setConsoles] = useState([]);
+    const [genres, setGenres] = useState([]);
     const [formData, setFormData] = useState({
         title: '',
         console: '',
+        release_year: '',
+        genre: '',
         description: '',
         box_art: null,
     });
@@ -29,6 +33,13 @@ const GameCreate = () => {
             fetch(`${API_BASE}/consoles/`)
                 .then(response => response.json())
                 .then(data => setConsoles(data))
+                .catch(err => console.error(err));
+        }, []);
+
+    useEffect(() => {
+            fetch(`${API_BASE}/genres/`)
+                .then(response => response.json())
+                .then(data => setGenres(data))
                 .catch(err => console.error(err));
         }, []);
 
@@ -74,6 +85,7 @@ const GameCreate = () => {
 
     return (
         <Container>
+            <ErrorAlert error={error}/>
             <Form onSubmit={handleSubmit}>
             <Row xs={1} md={2} className="mx-auto d-flex align-items-top g-4 mt-2 mb-1 mx-5">
                 <Col>
@@ -89,17 +101,56 @@ const GameCreate = () => {
                                 <Form.Label>
                                     Title
                                 </Form.Label>
-                                <Form.Control name='title' value={formData.title} onChange={handleChange} type="text"/>
+                                <Form.Control
+                                    name='title'
+                                    value={formData.title} 
+                                    onChange={handleChange} 
+                                    type="text"
+                                    required/>
                             </Form.Group>
 
                             <Form.Group>
                                 <Form.Label>
                                     Console
                                 </Form.Label>
-                                <Form.Select name='console' value={formData.console} onChange={handleChange}>
+                                <Form.Select 
+                                    name='console' 
+                                    value={formData.console} 
+                                    onChange={handleChange}>
                                     {consoles.map(console => (
                                         <option key={console.value} value={console.value}>
                                         {console.label}
+                                        </option>
+                                    ))}
+                                </Form.Select>
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>
+                                    Release Year
+                                </Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    name="release_year"
+                                    value={formData.release_year}
+                                    onChange={handleChange}
+                                    min="1950"
+                                    max={new Date().getFullYear()}
+                                />
+                            </Form.Group>
+
+
+                            <Form.Group>
+                                <Form.Label>
+                                    Genre
+                                </Form.Label>
+                                <Form.Select 
+                                    name='genre' 
+                                    value={formData.genre} 
+                                    onChange={handleChange}>
+                                    {genres.map(genre => (
+                                        <option key={genre.value} value={genre.value}>
+                                        {genre.label}
                                         </option>
                                     ))}
                                 </Form.Select>
@@ -110,7 +161,12 @@ const GameCreate = () => {
                                 <Form.Label>
                                     Description
                                 </Form.Label>
-                                <Form.Control name='description' value={formData.description} onChange={handleChange} type="text"/>
+                                <Form.Control 
+                                    name='description' 
+                                    value={formData.description} 
+                                    onChange={handleChange} 
+                                    type="text"
+                                    required/>
                             </Form.Group>
 
 
@@ -125,7 +181,7 @@ const GameCreate = () => {
                                 />
                             </Form.Group>
 
-                            <Button type="submit" className="btn btn-primary">
+                            <Button type="submit" className="btn btn-primary mt-3">
                                 Submit
                             </Button>
                               

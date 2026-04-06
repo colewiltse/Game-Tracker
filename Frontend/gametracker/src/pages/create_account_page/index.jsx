@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import API_BASE from '../../base_url';
+import ErrorAlert from '../../components/ErrorAlert';
 
 import Container from "react-bootstrap/Container";
 import Form from 'react-bootstrap/Form';
@@ -87,21 +88,18 @@ const CreateAccountPage = () => {
                     <Form.Label>
                     Email
                     </Form.Label>
-                    <Form.Control type='email' id='email' name='email'/>
+                    <Form.Control type='email' id='email' name='email' required/>
                 </Form.Group>
 
                 <Form.Group className="mb-3">
                     <Form.Label>
                     Password
                     </Form.Label>
-                    <Form.Control type="password" id="password" name="password"/>
+                    <Form.Control type="password" id="password" name="password" required/>
                 </Form.Group>
 
-                {error && (
-                    <div className="alert alert-danger mt-3" role="alert">
-                        {error}
-                    </div>
-                )}
+                <ErrorAlert error={error}/>
+                
                 <Button type="submit" className="btn btn-primary">
                     Submit
                 </Button>
