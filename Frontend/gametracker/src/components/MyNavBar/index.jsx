@@ -22,19 +22,21 @@ export default function MyNavBar() {
        <Navbar expand="lg" className="bg-body-tertiary">
         <Container className='fluid'>
             <NavbarBrand as={Link} to="/game_list">
-                <img src='/Game Tracker Logo Sized.png' alt="logo" width="200" height="35"/>
+                <img src='/Game_Tracker_Logo_Sized.png' alt="logo" width="200" height="35"/>
             </NavbarBrand>
 
-            <div>
+            <div className="d-flex gap-2">
                 <Link to="/game_create">
-                <Button variant="success">Add Game</Button>
+                    <Button variant="success">Add Game</Button>
                 </Link>
                 
                 <Link to="/account_info">
-                <Button variant="info">Profile</Button>
+                    <Button variant="info">Profile</Button>
                 </Link>
 
-                <Button variant="danger" onClick={handleLogout}>Log Out</Button>
+                <Button variant="danger" onClick={handleLogout}>
+                    Log Out
+                </Button>
             </div>
 
         </Container>

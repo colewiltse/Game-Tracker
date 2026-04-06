@@ -112,7 +112,7 @@ const GameList = () => {
             </Form>
 
             <Container className="py-1">
-                <Row xs={1} sm={2} md={4} lg={8} className="mb-4">
+                <Row xs={1} sm={2} md={4} lg={8} className="mb-4 g-3">
                     { games.map(game => (
                         <Col>
                             <GameCard game={game} />

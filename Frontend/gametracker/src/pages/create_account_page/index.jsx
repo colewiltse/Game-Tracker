@@ -5,6 +5,7 @@ import API_BASE from '../../base_url';
 import Container from "react-bootstrap/Container";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 
 
 const CreateAccountPage = () => {
@@ -70,13 +71,16 @@ const CreateAccountPage = () => {
                 crossOrigin="anonymous"
             />
             <Container className="sm mt-3" style={{ maxWidth: 600 }}>
+                <Link to="/">
+                        <img
+                            src="/Game_Tracker_Logo_Sized.png"
+                            className="img-fluid"
+                            width={300}
+                            alt="..."
+                        />
+                    </Link>
                 <Form onSubmit={handleSubmit}>
-                <img
-                    src="/Game Tracker Logo Sized.png"
-                    className="img-fluid"
-                    width={300}
-                    alt="..."
-                />
+                    
                 <h2 className="mb-3">Create Account</h2>
 
                 <Form.Group className="mb-3" controlId='formBasicEmail'>

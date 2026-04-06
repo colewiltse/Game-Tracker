@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import API_BASE from '../../base_url';
 
@@ -57,13 +57,16 @@ const LoginPage = () => {
                 crossOrigin="anonymous"
             />
             <Container className="sm mt-3" style={{ maxWidth: 600 }}>
+                <Link to="/" >
+                        <img
+                            src="/Game_Tracker_Logo_Sized.png"
+                            className="img-fluid"
+                            width={300}
+                            alt="..."
+                        />
+                    </Link>
                 <Form onSubmit={handleSubmit}>
-                <img
-                    src="/Game Tracker Logo Sized.png"
-                    className="img-fluid"
-                    width={300}
-                    alt="..."
-                />
+                    
                 <h2 className="mb-3">Log In</h2>
 
                 <Form.Group className="mb-3" controlId='formBasicEmail'>

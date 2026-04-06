@@ -68,12 +68,6 @@ const AccountEditPage = () => {
             />
             <Container className="sm mt-3" style={{ maxWidth: 600 }}>
                 <Form onSubmit={handleSubmit}>
-                <img
-                    src="/Game Tracker Logo Sized.png"
-                    className="img-fluid"
-                    width={300}
-                    alt="..."
-                />
                 <h2 className="mb-3">Edit Account</h2>
 
                 <Form.Group className="mb-3" controlId='formBasicEmail'>

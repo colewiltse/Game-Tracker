@@ -20,7 +20,7 @@ const HomePage = () => {
             
             <Container className='text-center mt-5 pt-5'>
                 <img
-                src="/Game Tracker Logo Sized.png"
+                src="/Game_Tracker_Logo_Sized.png"
                 className="img-fluid"
                 width={500}
                 alt="..."
