@@ -7,6 +7,9 @@ class GameTrackerUserSerializer(serializers.ModelSerializer):
         model = GameTrackerUser
         fields = ["id", "email", "password", "profile_picture",]
         read_only_fields = ["id",]
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
 
     def create(self, validated_data):
         return GameTrackerUser.objects.create_user(**validated_data)
