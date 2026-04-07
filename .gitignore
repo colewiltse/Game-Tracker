@@ -1,5 +1,4 @@
 __pycache__
 db.sqlite3
-Backend/gametracker/*/migrations/0*.py
 *.pyc
 .venv
