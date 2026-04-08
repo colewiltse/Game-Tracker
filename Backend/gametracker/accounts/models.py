@@ -25,11 +25,6 @@ class GameTrackerUserManager(BaseUserManager):
 
 
 class GameTrackerUser(AbstractBaseUser, PermissionsMixin):
-    profile_picture = models.ImageField(
-        upload_to='profile_pics/',
-        blank=True,
-        null=True
-    )
     email = models.EmailField(max_length=100, unique=True)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
