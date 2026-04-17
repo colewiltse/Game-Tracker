@@ -28,11 +28,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = getenv("SECRET_KEY",
+                             "django-insecure-d9ktlqn!s-4&#(fzyh_fsp*17f$%hs!v4pnpqqo-ru^dxmi)0#")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
+DEBUG = getenv("DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = getenv("ALLOWED_HOSTS", "localhost").split(" ")
+ALLOWED_HOSTS = getenv("ALLOWED_HOSTS", "127.0.0.1").split(" ")
 
 
 # Application definition
@@ -43,7 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
+    'cloudinary',
     'rest_framework_simplejwt',
     'games',
     'accounts',
@@ -162,8 +165,17 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-MEDIA_ROOT = BASE_DIR / "media"
+# MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
+
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
 
 CORS_ALLOWED_ORIGINS = [
 "http://localhost:3000",
@@ -194,3 +206,9 @@ CORS_ALLOW_METHODS = [
     'POST',
     'PUT',
 ]
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': getenv('CLOUD_NAME'),
+    'API_KEY': getenv('API_KEY'),
+    'API_SECRET': getenv('API_SECRET'),
+}
