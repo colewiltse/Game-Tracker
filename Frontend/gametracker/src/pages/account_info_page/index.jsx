@@ -1,13 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { fetchWithAuth } from '../../api';
-
+import React from 'react';
 import Container from 'react-bootstrap/Container';
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Button from 'react-bootstrap/Button';
-import CardText from 'react-bootstrap/esm/CardText';
 import { Link } from 'react-router-dom';
 
 
