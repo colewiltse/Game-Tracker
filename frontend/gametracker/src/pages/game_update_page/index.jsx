@@ -117,9 +117,11 @@ const GameUpdate = () => {
 
     }
 
-    if (loading) {
+    if (loading || !formData) {
         return (
-            <LoadingSpinner loading={loading}/>
+            <Container>
+                <LoadingSpinner loading={loading}/>
+            </Container>
         )
     }
 

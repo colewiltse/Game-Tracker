@@ -7,7 +7,6 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import Container from "react-bootstrap/Container";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Spinner from 'react-bootstrap/Spinner';
 
 
 const LoginPage = () => {
@@ -92,7 +91,7 @@ const LoginPage = () => {
 
                 <ErrorAlert error={error}/>
                 
-                <Button type="submit" className="btn btn-primary">
+                <Button type="submit" className="btn btn-primary" disabled={loading}>
                     Submit
                 </Button>
 

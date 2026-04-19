@@ -106,7 +106,7 @@ const CreateAccountPage = () => {
 
                 <ErrorAlert error={error}/>
                 
-                <Button type="submit" className="btn btn-primary">
+                <Button type="submit" className="btn btn-primary" disabled={loading}>
                     Submit
                 </Button>
 

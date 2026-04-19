@@ -50,9 +50,13 @@ const GameDetail = () => {
             });
     };
 
-    if(loading){
-        return(
-            <LoadingSpinner loading={loading}/>
+    if(loading || !game){
+         return (
+            <Container>
+                <div className='ms-3'>
+                    <LoadingSpinner loading={loading}/>
+                </div>
+            </Container>
         )
     }
 
