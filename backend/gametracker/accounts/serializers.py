@@ -5,7 +5,7 @@ from django.contrib.auth.hashers import make_password
 class GameTrackerUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = GameTrackerUser
-        fields = ["id", "email", "password", "profile_picture",]
+        fields = ["id", "email", "password",]
         read_only_fields = ["id",]
 
     def create(self, validated_data):

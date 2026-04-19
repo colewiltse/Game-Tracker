@@ -9,8 +9,8 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import CardText from 'react-bootstrap/esm/CardText';
 import { fetchWithAuth } from '../../api';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 
 const GameUpdate = () => {
@@ -29,10 +29,11 @@ const GameUpdate = () => {
         box_art: null,
     });
     const [error, setError] = useState("");
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const apiUrl = `/games/${id}/`
+        setLoading(true);
 
         fetchWithAuth(apiUrl,{})
             .then(response => response.json())
@@ -43,7 +44,10 @@ const GameUpdate = () => {
             .catch(error => {
                 console.error(error);
                 setError("Error fetching game data.");
-            });
+            })
+            .finally(() => {
+                setLoading(false);
+            })
     }, [id]);
 
 
@@ -113,8 +117,12 @@ const GameUpdate = () => {
 
     }
 
-    if (loading) {
-        return <p>Loading...</p>;
+    if (loading || !formData) {
+        return (
+            <Container>
+                <LoadingSpinner loading={loading}/>
+            </Container>
+        )
     }
 
     return (

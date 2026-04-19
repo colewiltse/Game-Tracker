@@ -9,6 +9,7 @@ import Col from "react-bootstrap/Col";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { fetchWithAuth } from '../../api';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 
 
@@ -23,6 +24,7 @@ const GameList = () => {
         ordering: '',
     });
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -59,7 +61,8 @@ const GameList = () => {
     }, []);
 
 
-    useEffect(() => {        
+    useEffect(() => {
+        setLoading(true);        
         fetchWithAuth(currPage, {})
             .then(response => response.json())
             .then(data => {
@@ -69,12 +72,16 @@ const GameList = () => {
             .catch(error => {
             console.error(error);
             setError("Error fetching games.");
-            });
+            })
+            .finally(() => {
+                setLoading(false);
+            })
     }, [currPage]); 
 
 
     return(
         <Container>
+            <LoadingSpinner loading={loading}/>
             <ErrorAlert error={error}/>
             <Form onSubmit={handleSubmit}>            
                 <Row className='g-3 mb-3 mt-1 align-items-center justify-content-center'>

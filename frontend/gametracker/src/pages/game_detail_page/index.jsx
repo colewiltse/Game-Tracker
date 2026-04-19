@@ -8,18 +8,20 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Button from 'react-bootstrap/Button';
-import CardText from 'react-bootstrap/esm/CardText';
 import { Link } from 'react-router-dom';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 
 const GameDetail = () => {
     const [game, setGame] = useState(null);
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const { id } = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
         const apiUrl = `/games/${id}/`
+        setLoading(true);
 
         fetchWithAuth(apiUrl,{})
             .then(response => response.json())
@@ -28,6 +30,9 @@ const GameDetail = () => {
             .catch(error => {
             console.error(error);
             setError("Error fetching game data.");
+            })
+            .finally(() =>{
+                setLoading(false);
             });
     }, [id]);
 
@@ -45,8 +50,14 @@ const GameDetail = () => {
             });
     };
 
-    if (!game) {
-        return <div>Loading...</div>;
+    if(loading || !game){
+         return (
+            <Container>
+                <div className='ms-3'>
+                    <LoadingSpinner loading={loading}/>
+                </div>
+            </Container>
+        )
     }
 
     return (

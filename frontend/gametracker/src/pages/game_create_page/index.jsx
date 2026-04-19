@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import API_BASE from '../../base_url';
 
 import Container from 'react-bootstrap/Container';
@@ -8,7 +8,6 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import CardText from 'react-bootstrap/esm/CardText';
 import { fetchWithAuth } from '../../api';
 import ErrorAlert from '../../components/ErrorAlert';
 

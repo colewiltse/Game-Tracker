@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import API_BASE from '../../base_url';
 import ErrorAlert from '../../components/ErrorAlert';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 import Container from "react-bootstrap/Container";
 import Form from 'react-bootstrap/Form';
@@ -12,9 +13,11 @@ const LoginPage = () => {
     const loginUrl = `${API_BASE}/api/token/`;
     const navigate = useNavigate();
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     function handleSubmit(event) {
         let data = new FormData(event.target);
+        setLoading(true);
 
         fetch(loginUrl, {
             method: "POST",
@@ -38,10 +41,12 @@ const LoginPage = () => {
         .catch(error => {
             console.error(error);
             setError("Unable to connect to server. Please try again later.");
+        })
+        .finally(()=> {
+            setLoading(false);
         });
 
         event.preventDefault();
-
 
     }
 
@@ -86,11 +91,14 @@ const LoginPage = () => {
 
                 <ErrorAlert error={error}/>
                 
-                <Button type="submit" className="btn btn-primary">
+                <Button type="submit" className="btn btn-primary" disabled={loading}>
                     Submit
                 </Button>
 
                 </Form>
+                
+                <LoadingSpinner loading={loading}/>
+
             </Container>
         </>
     );
