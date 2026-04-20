@@ -2,7 +2,7 @@
 
 The purpose of this document is to clearly identify and document all api endpoints that are a part of my backend.
 
-Please note that the api uses token authentication. Whenever making an authenticated api request, make sure to include your access token in your request. In Postman, this should be in authorization section where `Bearer token` should be selected. Furthermore, all requests require you to be logged in except for `POST /user` and `/api` to allow new users to create accounts and log in.
+Please note that the api uses token authentication. Whenever making an authenticated api request, make sure to include your access token in your request. In Postman, this should be in authorization section where `Bearer token` should be selected. Furthermore, all requests require you to be logged in except for `POST /user` and `/api` to allow new users to create accounts and log in. (Also, consoles/ and genres/ allow unauthorized requests as they simply fetch the lists of consoles and genres respectively)
 
 ## Accounts
 
