@@ -4,7 +4,7 @@ Link to website: [https://game-tracker-qoxu.onrender.com/](https://game-tracker-
 
 Backend Documentation: [API.md](API.md)
 
-This project is a web application that lets users create accounts and keep track and organize their videogames from across multiple platforms. This project was designed using a django REST framework backend and a React.js frontend. I was able to successfully deploy this project to the web using Render, Neon, and Cloudinary for the frontend, backend, and image storage respectfully. Below you will find description of its features as well as instructions on how to run locally.
+This project is a web application that lets users create accounts and keep track and organize their videogames from across multiple platforms. This project was designed using a django REST framework backend and a React.js frontend. I was able to successfully deploy this project to the web using Render, Neon, and Cloudinary for the frontend, backend, and image storage respectfully. Below you will find descriptions of its features as well as instructions on how to run locally.
 
 ## Screen Shots
 
