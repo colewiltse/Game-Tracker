@@ -31,7 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = getenv("SECRET_KEY",
                              "django-insecure-d9ktlqn!s-4&#(fzyh_fsp*17f$%hs!v4pnpqqo-ru^dxmi)0#")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = getenv("DEBUG", "False").lower() == "true"
+DEBUG = getenv("DEBUG", "True")
 
 ALLOWED_HOSTS = getenv("ALLOWED_HOSTS", "127.0.0.1").split(" ")
 
@@ -106,28 +106,29 @@ WSGI_APPLICATION = 'gametracker.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-DATABASES = {
-  'default': {
-    'ENGINE': 'django.db.backends.postgresql',
-    'NAME': getenv('PGDATABASE'),
-    'USER': getenv('PGUSER'),
-    'PASSWORD': getenv('PGPASSWORD'),
-    'HOST': getenv('PGHOST'),
-    'PORT': getenv('PGPORT', 5432),
-    'OPTIONS': {
-      'sslmode': 'require',
-    },
-    'DISABLE_SERVER_SIDE_CURSORS': True,
-    'CONN_HEALTH_CHECKS': True,
-  }
-}
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': getenv('PGDATABASE'),
+            'USER': getenv('PGUSER'),
+            'PASSWORD': getenv('PGPASSWORD'),
+            'HOST': getenv('PGHOST'),
+            'PORT': getenv('PGPORT', 5432),
+            'OPTIONS': {
+            'sslmode': 'require',
+            },
+            'DISABLE_SERVER_SIDE_CURSORS': True,
+            'CONN_HEALTH_CHECKS': True,
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -165,17 +166,29 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-# MEDIA_ROOT = BASE_DIR / "media"
+if DEBUG:
+    MEDIA_ROOT = BASE_DIR / "media"
+
 MEDIA_URL = "/media/"
 
-STORAGES = {
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-    },
-}
+if DEBUG:
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
+else:
+    STORAGES = {
+        "default": {
+            "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
 
 CORS_ALLOWED_ORIGINS = [
 "http://localhost:3000",

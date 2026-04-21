@@ -27,18 +27,12 @@ The frontend was developed using react.js to create a fast and responsive user e
 
 ## Instructions to Run Locally
 Both my frontend and backend can be run separately. Below I will give instructions for each and their various options. You may optionally set up a virtual environment to prevent dependancy conflicts.
+Also, ensure you have `python` installed, ideally a version above or equal to `3.14.2`, and an up to date version of `pip`, as these will be needed to install the backend.
 
 ### Backend
-Before doing anything, please open the file `settings.py` located in `backend/gametracker/gametracker` and modify the following lines:
-Under `DATABASES`, uncomment out the first database setting and comment out the second one. This switches the database from the one online to the one locally on your machine.
-Next, uncomment the line `MEDIA_ROOT` so that images are saved in the right place.
-Lastly, comment out the setting `STORAGES`, as this ensures images don't go the online server.
-
-Now, you will need to run the following commands in your terminal to run the database locally:
-
 First, in your terminal run `cd/backend/gametracker` to chande the directory into the backend.
 Next, run `pip install -r requirements.txt` to install all of the required packages.
-Next, run `python manage.py makemigrations` to set up the database.
+Next, run `python manage.py migrate` to set up the database.
 Lastly, run `python manage.py runserver` to turn on the database.
 From now on, you will only need to run `python manage.py runserver` in order to turn on the database.
 
@@ -51,8 +45,7 @@ To now set up the frontend locally, you need to first open a new terminal on you
 First, in your new terminal run `cd/frontend/gametracker` to change directictory into the frontend.
 Next, run `npm install` to install the necessary packages.
 Lastly, run `npm start` to start up your frontend.
-It should open automatically, but in case it doesn't, it should be viewable at 
+The web page should open automatically, but in case it doesn't, it should be viewable at 
 http://localhost:3000
 
 With both the backend and frontend running at the same time, you should now be able to fully access the project on your local machine.
-
